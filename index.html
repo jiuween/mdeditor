@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="mdeditor/css/editormd.css" />
+    <link rel="stylesheet" href="mdeditor/prism/css/white.css">
+    <title>Title</title>
+    <style>
+        html,body,#mdeditor{height:100%;}
+    </style>
+</head>
+<body style="height: 100%">
+
+    <div id="mdeditor">
+        <textarea style="display:none;"></textarea>
+    </div>
+
+</body>
+
+
+<script src="mdeditor/jquery.min.js"></script>
+<script src="mdeditor/editormd.js"></script>
+<script src="mdeditor/prism/js/prism.js"></script>
+<script src="mdeditor/to-markdown.js"></script>
+<!--<script src="md_editor_core.js"></script>-->
+
+<script>
+
+    var mdEditor;
+    var plainPasteMode = false;             // 纯文本粘贴模式
+
+    // 剪贴板解析HTML转换到Markdown
+    clipboardHTMLToMd = function (htmlText) {
+        if (htmlText != "") {
+            var referencelinkRegEx = /reference-link/;
+            mdEditor.insertValue(toMarkdown(htmlText, {
+                gfm: true,
+                converters:[
+                    {
+                        filter: 'div',
+                        replacement: function(content) {
+                            return content + '\n';
+                        }
+                    },
+                    {
+                        filter: 'span',
+                        replacement: function(content) {
+                            return content;
+                        }
+                    },
+                    {
+                        filter: function (node) {
+                            return (node.nodeName === 'A' && referencelinkRegEx.test(node.className));
+                        },
+                        replacement: function(content) {
+                            return "";
+                        }
+                    }]})
+            );
+            return true;
+        }
+        return false;
+    };
+
+
+
+
+    $(function() {
+        mdEditor = editormd("mdeditor", {
+            /*width   : "90%",*/
+            /*height  : 640,*/
+            syncScrolling : "single",
+            path    : "mdeditor/lib/",
+            onload: function(){
+
+                // 监听文本变化事件
+                this.cm.on("change", function(_cm, changeObj) {
+                    modified = true;
+                });
+
+                // 监听粘贴事件
+                this.cm.on("paste", function (_cm, e) {
+                    var clipboardData = event.clipboardData || window.clipboardData;
+                    if (clipboardData) {
+                        if (clipboardData.types == "Files") {
+                            clipboardToImage();
+                        }
+                        else if ($.inArray("text/html", clipboardData.types) != -1) {
+                            if (!plainPasteMode && clipboardHTMLToMd(clipboardData.getData("text/html"))) {
+                                e.preventDefault();
+                            }
+                        }
+                        else {
+                            //类型为"text/plain"，快捷键Ctrl+Shift+V
+                        }
+                    }
+                });
+            }
+
+        });
+
+        /*
+        // or
+        testEditor = editormd({
+            id      : "test-editormd",
+            width   : "90%",
+            height  : 640,
+            path    : "../lib/"
+        });
+        */
+    });
+
+</script>
+</html>
