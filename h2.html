@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -13,7 +13,7 @@
         #aaa{display: flex;}
 
         .t-info-title{font-weight: 600;font-size: 16px;}
-        .t-info{padding:1rem;    border-left: 10px solid;margin-top:1rem;height:auto;}
+        .t-info{padding:1rem;    border-left: 8px solid;margin-top:1rem;height:auto;}
         .t-info-text{margin-top:1rem;}
 
         .t-tip{background-color: #efefef;border-color: #2ebb2e;}
@@ -104,7 +104,7 @@ world
 
     function getBlockList(){
         var text = getAreaText();
-        var reg = new RegExp('(\\n|^)::: (tip|warning|danger)(\\n|(( )+|(\\t)+)\\S+\\n)([\\s|\\S][^:::])+:::(\\n|$)' , 'g');
+        var reg = new RegExp('(\\n|^)::: (tip|warning|danger)(\\n|(( )+|(\\t)+)\\S+\\n)([\\s|\\S][^:::]+)+:::(\\n|$)' , 'g');
 
         var resArr = text.match(reg);
         if(resArr == null){
