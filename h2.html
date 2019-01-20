@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #render{border:1px solid #ccc;padding:10px 20px 10px 20px;background-color: green;color:#fff;border-radius: 5px;}
+        #text{width:40%;height:400px;    font-size: 16px;
+            font-family: 'Consolas';
+            background: #efeeee;
+            color: #678e0e;}
+        #result{width:40%;min-height: 400px;border:1px solid #CCCCCC;margin-left: 10px;}
+        #aaa{display: flex;}
+
+        .t-info-title{font-weight: 600;font-size: 16px;}
+        .t-info{padding:1rem;    border-left: 10px solid;margin-top:1rem;height:auto;}
+        .t-info-text{margin-top:1rem;}
+
+        .t-tip{background-color: #efefef;border-color: #2ebb2e;}
+
+        .t-warning{background-color: rgba(239, 218, 117, 0.3);border-color: #c7a706;}
+        .t-warning .t-info-title{color:#ad8d14;}
+        .t-warning .t-info-text{color: #674d12;}
+
+        .t-danger{background-color: rgba(187, 35, 35, 0.2);;border-color: #d82727;}
+        .t-danger .t-info-title{color:#ad1414;}
+        .t-danger .t-info-text{color: #671212;}
+    </style>
+</head>
+<body>
+
+<div id="aaa">
+        <textarea id="text">::: tip
+hello
+world
+:::
+
+::: warning
+数据库请求超时
+:::
+
+::: danger 警告
+123
+:::</textarea>
+
+    <div id="result">
+
+<!--        <div class="t-info t-tip">
+            <div class="t-info-title">TIP</div>
+            <div class="t-info-text">请注意，倒车, hello world</div>
+        </div>
+
+        <div class="t-info t-warning">
+            <div class="t-info-title">WARNING</div>
+            <div class="t-info-text">请注意，倒车, hello world</div>
+        </div>
+
+        <div class="t-info t-danger">
+            <div class="t-info-title">错误</div>
+            <div class="t-info-text">请注意，倒车, hello world</div>
+        </div>-->
+
+    </div>
+</div>
+
+
+    <button id="render">渲染</button>
+
+</body>
+<script>
+
+
+
+    document.getElementById("render").addEventListener('click' , function(){
+        var blockList = getBlockList();
+        console.table(blockList);
+
+        render(blockList);
+
+    });
+
+
+    function render(blockList){
+        for(var i = 0 ; i < blockList.length ; i ++){
+            var block = blockList[i];
+            var cssLevel = block['level'];
+            var text = removeFirstn_(block['text']);
+            text = text.replace(/\n/g , '<br/>');
+            var dom = '        <div class="t-info t-' + cssLevel + '">\n' +
+                '            <div class="t-info-title">' + block['title'] + '</div>\n' +
+                '            <div class="t-info-text">' + text + '</div>\n' +
+                '        </div>';
+
+            var divNode = document.createElement("div");
+            divNode.innerHTML = dom;
+
+            var resultDom = document.getElementById("result");
+            resultDom.appendChild(divNode);
+        }
+
+
+
+    }
+
+    function getBlockList(){
+        var text = getAreaText();
+        var reg = new RegExp('(\\n|^)::: (tip|warning|danger)(\\n|(( )+|(\\t)+)\\S+\\n)([\\s|\\S][^:::])+:::(\\n|$)' , 'g');
+
+        var resArr = text.match(reg);
+        if(resArr == null){
+            resArr = []
+        }
+        var blockList = []
+        for(var i = 0 ; i < resArr.length ; i ++){
+            var str = resArr[i];
+            str = removeFirstn_(str);
+            var ind = str.indexOf('\n');
+            var first = str.substring(0 , ind).replace(/( |\t)+/g,' ');
+            var fArr = first.split(' ');
+            var level = fArr[1];
+            var title = level;
+            if(fArr.length > 2){
+                title = fArr[2];
+            }
+            var lastind = str.indexOf(':::' , ind+ 1);
+            var text = str.substring(ind , lastind);
+            var block = {}
+            block['level'] = level;
+            block['title'] = title;
+            block['text'] = text;
+            blockList.push(block);
+        }
+        return blockList;
+    }
+
+    function removeFirstn_(str){
+        if(str.startsWith('\n')){
+            str = str.substring(1)
+        }
+        return str;
+    }
+
+
+    function getAreaText(){
+        var txt = document.getElementById("text").value;
+        return txt;
+    }
+
+
+</script>
+
+</html>
