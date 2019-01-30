@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="mdeditor/prism/css/white.css">
     <title>Title</title>
     <style>
-        html,body,#mdeditor{height:100%;}
+        html,body{height:100%;}
+        #mdeditor{height: 90% !important;}
+        .btn{border:none;border-radius: 5px;color:#fff;background-color: #00a8c6;padding:10px 20px 10px 20px;}
     </style>
 </head>
 <body style="height: 100%">
@@ -14,6 +16,10 @@
     <div id="mdeditor">
         <textarea style="display:none;"></textarea>
     </div>
+
+
+    <button onclick="get_markdown()" class="btn">获取markdown</button>
+    <button onclick="get_html()" class="btn">获取html</button>
 
 </body>
 
@@ -73,6 +79,7 @@
             path    : "mdeditor/lib/",
             taskList : true,            // 开启任务列表的支持，默认为false
             tocm            : true,         // Using [TOCM]
+            saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea，这样才能调用getHtml()方法获取生成的Html
             tex : false,                   // 开启科学公式TeX语言支持，默认关闭
             flowChart : false,             // 开启流程图支持，默认关闭
             sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
@@ -105,6 +112,9 @@
 
         });
 
+
+
+
         /*
         // or
         testEditor = editormd({
@@ -115,6 +125,16 @@
         });
         */
     });
+
+    function get_html() {
+        var html = mdEditor.getHTML();
+        alert(html)
+    }
+
+    function get_markdown() {
+        var mk = mdEditor.getMarkdown();
+        alert(mk)
+    }
 
 </script>
 </html>
