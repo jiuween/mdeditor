@@ -12,6 +12,23 @@
 
 @charset "UTF-8";
 /*! prefixes.scss v0.1.0 | Author: Pandao | https://github.com/pandao/prefixes.scss | MIT license | Copyright (c) 2015 */
+
+
+/* tip */
+.t-info-title{font-weight: 600;font-size: 16px;}
+.t-info{padding:1rem;    border-left: 8px solid;margin:1rem 0 1rem 0;height:auto;}
+.t-info-text{margin-top:1rem;}
+
+.t-tip{background-color: #efefef;border-color: #2ebb2e;}
+
+.t-warning{background-color: rgba(239, 218, 117, 0.3);border-color: #c7a706;}
+.t-warning .t-info-title{color:#ad8d14;}
+.t-warning .t-info-text{color: #674d12;}
+
+.t-danger{background-color: rgba(187, 35, 35, 0.2);;border-color: #d82727;}
+.t-danger .t-info-title{color:#ad1414;}
+.t-danger .t-info-text{color: #671212;}
+
 .editormd {
   width: 90%;
   height: 640px;
