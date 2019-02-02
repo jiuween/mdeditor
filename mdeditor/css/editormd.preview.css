@@ -2462,7 +2462,7 @@
   -webkit-text-size-adjust: 100%;
   color: #333;
   overflow: hidden;
-  font-family: "Microsoft YaHei", Helvetica, "Meiryo UI", "Malgun Gothic", "Segoe UI", "Trebuchet MS", "Monaco", monospace, Tahoma, STXihei, "华文细黑", STHeiti, "Helvetica Neue", "Droid Sans", "wenquanyi micro hei", FreeSans, Arimo, Arial, SimSun, "宋体", Heiti, "黑体", sans-serif;
+  font-family: "-apple-system","Helvetica Neue","Helvetica","Arial","PingFang SC","Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
   font-size: 16px;
   line-height: 1.6;
   word-wrap: break-word;
@@ -3116,7 +3116,7 @@
 
 .editormd-preview-container, .editormd-html-preview {
   text-align: left;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
   padding: 12px;
   overflow: auto;
@@ -3125,14 +3125,16 @@
 }
 .editormd-preview-container blockquote, .editormd-html-preview blockquote {
   color: #666;
-  border-left: 4px solid #ddd;
-  padding-left: 20px;
+  border-left: 8px solid;
+  background: #efefef;
+  padding: 1rem;
   margin-left: 0;
   font-size: 14px;
 }
 .editormd-preview-container p code, .editormd-html-preview p code {
   margin-left: 5px;
   margin-right: 4px;
+  color: #476582;
 }
 .editormd-preview-container abbr, .editormd-html-preview abbr {
   background: #ffffdd;
@@ -3146,6 +3148,7 @@
 .editormd-preview-container code, .editormd-html-preview code {
   border: 1px solid #ddd;
   background: #f6f6f6;
+  color: #476582;
   padding: 3px;
   border-radius: 3px;
   font-size: 14px;
